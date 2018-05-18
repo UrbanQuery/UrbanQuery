@@ -32,7 +32,7 @@ namespace Microsoft.Bot.Sample.LuisBot
         /// </summary>
         /// <param name="activity"></param>
         [ResponseType(typeof(void))]
-        public virtual async Task<IHttpActionResult> Get([FromUri] string query)
+        public virtual async Task<IHttpActionResult> Post([FromBody] string query)
         {
             try
             {
