@@ -13,8 +13,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleEchoBot</RootNamespace>
-    <AssemblyName>SimpleEchoBot</AssemblyName>
+    <RootNamespace>LuisBot</RootNamespace>
+    <AssemblyName>LuisBot</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -74,8 +74,8 @@
     <Reference Include="Microsoft.Bot.Builder.Autofac, Version=3.12.2.4, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bot.Builder.3.12.2.4\lib\net46\Microsoft.Bot.Builder.Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Bot.Builder.Azure, Version=3.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Bot.Builder.Azure.3.2.4\lib\net46\Microsoft.Bot.Builder.Azure.dll</HintPath>
+    <Reference Include="Microsoft.Bot.Builder.Azure, Version=3.2.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Bot.Builder.Azure.3.2.5\lib\net46\Microsoft.Bot.Builder.Azure.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bot.Builder.History, Version=3.12.2.4, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bot.Builder.History.3.12.2.4\lib\net46\Microsoft.Bot.Builder.History.dll</HintPath>
@@ -177,8 +177,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Dialogs\BasicLuisDialog.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
-    <Compile Include="Dialogs\EchoDialog.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -239,5 +239,4 @@
   -->
   <Import Project="PostDeployScripts\IncludeSources.targets" Condition="Exists('PostDeployScripts\IncludeSources.targets')"/>
   <Import Project="..\PostDeployScripts\IncludeSources.targets" Condition="Exists('..\PostDeployScripts\IncludeSources.targets')"/>
-  
 </Project>
