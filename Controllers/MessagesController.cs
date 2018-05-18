@@ -10,10 +10,12 @@ using System.Diagnostics;
 using System.Configuration;
 using System.Threading;
 using Microsoft.Bot.Builder.Luis.Models;
+using System.Web.Http.Cors;
 
 namespace Microsoft.Bot.Sample.LuisBot
 {
     [AllowAnonymous]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class MessagesController : ApiController
     {
         private ILuisService luisService;
