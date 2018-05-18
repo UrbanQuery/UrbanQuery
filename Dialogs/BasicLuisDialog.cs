@@ -1,7 +1,9 @@
 using System;
 using System.Configuration;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
-
+using System.Web;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
@@ -45,9 +47,15 @@ namespace Microsoft.Bot.Sample.LuisBot
             await this.ShowLuisResult(context, result);
         }
 
+        [LuisIntent("BusinessGrowth")]
+        public async Task BusinessIntent(IDialogContext context, LuisResult result)
+        {
+            await this.ShowLuisResult(context, result);
+        }
+
         private async Task ShowLuisResult(IDialogContext context, LuisResult result) 
         {
-            await context.PostAsync($"You have reached {result.Intents[0].Intent}. You said: {result.Query}");
+            await context.SayAsync($"You have reached {result.Intents[0].Intent}. You said: {result.Query}");
             context.Wait(MessageReceived);
         }
     }

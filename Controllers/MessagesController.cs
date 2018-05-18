@@ -1,36 +1,57 @@
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-
+using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Builder.Dialogs;
 using System.Web.Http.Description;
 using System.Net.Http;
 using System.Diagnostics;
+using System.Configuration;
+using System.Threading;
+using Microsoft.Bot.Builder.Luis.Models;
 
 namespace Microsoft.Bot.Sample.LuisBot
 {
-    [BotAuthentication]
+    [AllowAnonymous]
     public class MessagesController : ApiController
     {
+        private ILuisService luisService;
+
+        public MessagesController()
+        {
+            luisService = new LuisService(new LuisModelAttribute(
+            ConfigurationManager.AppSettings["LuisAppId"],
+            ConfigurationManager.AppSettings["LuisAPIKey"],
+            domain: ConfigurationManager.AppSettings["LuisAPIHostName"]));
+        }
+
         /// <summary>
         /// POST: api/Messages
         /// receive a message from a user and send replies
         /// </summary>
         /// <param name="activity"></param>
         [ResponseType(typeof(void))]
-        public virtual async Task<HttpResponseMessage> Post([FromBody] Activity activity)
+        public virtual async Task<IHttpActionResult> Get([FromUri] string query)
         {
-            // check if activity is of type message
-            if (activity.GetActivityType() == ActivityTypes.Message)
+            try
             {
-                await Conversation.SendAsync(activity, () => new BasicLuisDialog());
+
+                var luisRequest = new LuisRequest(query: query);
+                var result = await luisService.QueryAsync(luisService.BuildUri(luisService.ModifyRequest(luisRequest)), new CancellationToken());
+
+                if (result.Intents.Count > 0)
+                {
+                    var bestMatch = result.Intents[0].Intent;
+                    return Ok(bestMatch);
+                }
             }
-            else
+            catch (Exception e)
             {
-                HandleSystemMessage(activity);
+                Console.WriteLine(e.StackTrace);
             }
-            return new HttpResponseMessage(System.Net.HttpStatusCode.Accepted);
+
+            return NotFound();
         }
 
         private Activity HandleSystemMessage(Activity message)
